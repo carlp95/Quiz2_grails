@@ -28,7 +28,7 @@ class User implements Serializable{
     }
 
     def beforeUpdate() {
-        if (this.isDirty('password')) { //TODO: verificar en en foro.
+        if (this.isDirty('password')) {
             encodePassword()
         }
     }
@@ -49,5 +49,9 @@ class User implements Serializable{
         lastName(lastName: true)
         email(email: true)
         bornDate(bornDate:true)
+    }
+
+    static mapping = {
+        password column: '`password`'
     }
 }
