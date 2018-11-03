@@ -4,14 +4,18 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
 
-@EqualsAndHashCode(includes = 'cedula')
-@ToString(includes = 'cedula', includeNames = true, includePackage = false)
-class User implements Serializable{
-
-    private static final long serialVersionUID = 1
+@EqualsAndHashCode(includes = 'username')
+@ToString(includes = 'username', includeNames = true, includePackage = false)
+class User implements Serializable {
 
     transient springSecurityService
 
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
+
+    String username
     String cedula
     String password
     String name
@@ -20,7 +24,7 @@ class User implements Serializable{
     Date bornDate
 
     Set<Roles> getAuthorities() {
-        UserRoles.findAllByUsuario(this)*.roles
+        (UserRoles.findAllByUsuario(this) as List<UserRoles>)*.role as Set<Roles>
     }
 
     def beforeInsert() {

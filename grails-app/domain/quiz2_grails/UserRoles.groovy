@@ -6,12 +6,13 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 
 
 @ToString(cache = true, includeNames = true, includePackage = false)
-class UserRoles implements Serializable{
+class UserRoles implements Serializable {
 
     private static final long serialVersionUID = 1
 
     User user
     Roles role
+
     @Override
     boolean equals(other) {
         if (other instanceof UserRoles) {
@@ -36,9 +37,9 @@ class UserRoles implements Serializable{
     }
 
     private static DetachedCriteria criteriaFor(long userId, long roleId) {
-        UserRoles.where {
+        where {
             user == User.load(userId) &&
-                    role == Roles.load(roleId)
+            role == Roles.load(roleId)
         }
     }
 
@@ -50,16 +51,16 @@ class UserRoles implements Serializable{
 
     static boolean remove(User u, Roles r) {
         if (u != null && r != null) {
-            UserRoles.where { user == u && role == r }.deleteAll()
+            where { user == u && role == r }.deleteAll()
         }
     }
 
     static int removeAll(User u) {
-        u == null ? 0 : UserRoles.where { user == u }.deleteAll()
+        u == null ? 0 : where { user == u }.deleteAll()
     }
 
     static int removeAll(Roles r) {
-        r == null ? 0 : UserRoles.where { role == r }.deleteAll()
+        r == null ? 0 : where { role == r }.deleteAll()
     }
 
     static constraints = {
